@@ -486,7 +486,6 @@ public class AddressBook {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             String personName = getNameFromPerson(person);
-            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
             for (String aKeyword : keywords) {
                 String newKeyword = aKeyword.replace('_', '.').replace("*", ".*");
                 newKeyword = ".*" + newKeyword + ".*";
