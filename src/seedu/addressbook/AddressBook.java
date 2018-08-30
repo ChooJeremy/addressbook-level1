@@ -485,9 +485,15 @@ public class AddressBook {
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
+            String personName = getNameFromPerson(person);
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
-            if (!Collections.disjoint(wordsInName, keywords)) {
-                matchedPersons.add(person);
+            for (String aKeyword : keywords) {
+                String newKeyword = aKeyword.replace('_', '.').replace("*", ".*");
+                newKeyword = ".*" + newKeyword + ".*";
+                if(personName.matches(newKeyword)) {
+                    matchedPersons.add(person);
+                    break;
+                }
             }
         }
         return matchedPersons;
